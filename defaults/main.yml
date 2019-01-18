@@ -1,0 +1,26 @@
+---
+# defaults file for django-server-deployment-config
+
+development_dependency: [
+  openssl-devel,
+  sqlite-devel,
+  ncurses-devel,
+  libXcursor,
+  libjpeg-turbo-devel,
+  libjpeg-turbo,
+  python-devel,
+  java-1.8.0-openjdk,
+  wget,
+  jre,
+  postgresql,
+  nginx,
+]
+
+dependency_files: [
+    http.tar.gz,
+    python.tar.gz
+]
+
+configure_user_group: dbadmin
+default_source_path: /kmine/
+default_jenkins_path: /kmine/jenkins

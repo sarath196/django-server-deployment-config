@@ -1,0 +1,48 @@
+---
+# tasks file for django-server-deployment-config
+
+     - name: Install build tools
+       yum:
+         name: "@Development tools"
+         state: present
+
+     - name: Install epel-release
+       yum:
+         name: "epel-release"
+         state: present
+
+
+     - name: Install software dependencies
+       yum:
+         name: '{{development_dependency}}'
+         state: present  
+
+     - name: Creates directory
+       file:
+         path: "{{default_source_path}}"
+         state: directory
+         owner: "{{configure_user_group}}"
+         group: "{{configure_user_group}}"
+         mode: 0755
+
+     - name: Creates directory
+       file:
+         path: "{{default_jenkins_path}}"
+         state: directory
+         owner: "{{configure_user_group}}"
+         group: "{{configure_user_group}}" 
+         mode: 0755
+
+
+     - name: Copy repository dir
+       copy:
+         src: files/repos/
+         dest: "{{default_source_path}}"
+
+     - name: Extract tar.gz into repository directory
+       unarchive:
+          src: "{{default_source_path+item}}"
+          dest: "{{default_source_path}}"
+          remote_src: yes
+       loop: "{{dependency_files}}"
+       when: dependency_files
